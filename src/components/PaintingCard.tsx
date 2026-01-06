@@ -16,14 +16,6 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
     setUserRating(rating);
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-PK', {
-      style: 'currency',
-      currency: 'PKR',
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -42,7 +34,7 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
           className="painting-image w-full h-full object-cover"
           loading="lazy"
         />
-        
+
         {/* Overlay on Hover */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -110,7 +102,7 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
         {/* Price */}
         <div className="flex items-center justify-between pt-2 border-t border-border">
           <span className="font-display text-2xl font-bold text-primary">
-            {formatPrice(painting.price)}
+            {painting.price} {/* Display string directly */}
           </span>
         </div>
       </div>

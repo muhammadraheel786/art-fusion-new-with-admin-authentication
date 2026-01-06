@@ -4,14 +4,6 @@ import { Star, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 
 export const FeaturedSection = () => {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-PK', {
-      style: 'currency',
-      currency: 'PKR',
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-
   const scrollToContact = () => {
     const element = document.querySelector("#contact");
     if (element) {
@@ -61,7 +53,7 @@ export const FeaturedSection = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Featured Badge */}
                 <div className="absolute top-4 right-4">
                   <motion.div
@@ -87,11 +79,13 @@ export const FeaturedSection = () => {
                       {painting.title}
                     </h3>
                   </div>
+
+                  {/* Price */}
                   <span className="font-display text-2xl font-bold text-primary whitespace-nowrap">
-                    {formatPrice(painting.price)}
+                   
                   </span>
                 </div>
-                
+
                 <p className="mt-3 font-body text-muted-foreground line-clamp-2">
                   {painting.description}
                 </p>
