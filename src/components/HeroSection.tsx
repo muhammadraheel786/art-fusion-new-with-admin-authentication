@@ -78,7 +78,7 @@ export const HeroSection = () => {
             className="font-body text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Discover unique handmade paintings that bring emotions to life. 
-            Each piece is crafted with love, telling its own beautiful story.
+            Each piece is crafted with love, telling its own beautiful story.For Customized paintings contact me.
           </motion.p>
 
           {/* CTA Buttons */}
