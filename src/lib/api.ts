@@ -18,7 +18,7 @@ function getAnonUserId(): string {
 }
 
 export async function fetchPaintings(): Promise<PaintingWithRating[]> {
-  if (!hasSupabase) throw new Error("Supabase not configured");
+  if (!hasSupabase || !supabase) throw new Error("Supabase not configured");
 
   const { data: paintings, error } = await supabase
     .from("paintings")
@@ -53,7 +53,7 @@ export async function submitRating(
   paintingId: number,
   rating: number
 ): Promise<{ avg_rating: number; rating_count: number }> {
-  if (!hasSupabase) throw new Error("Supabase not configured");
+  if (!hasSupabase || !supabase) throw new Error("Supabase not configured");
 
   const userId = getAnonUserId();
   const { error } = await supabase.from("ratings").upsert(
@@ -75,7 +75,7 @@ export async function submitRating(
 }
 
 export async function login(email: string, password: string) {
-  if (!hasSupabase) throw new Error("Supabase not configured");
+  if (!hasSupabase || !supabase) throw new Error("Supabase not configured");
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) throw new Error(error.message);
@@ -88,7 +88,7 @@ export async function login(email: string, password: string) {
 }
 
 export async function verifyToken(token: string) {
-  if (!hasSupabase) return null;
+  if (!hasSupabase || !supabase) return null;
   const { data, error } = await supabase.auth.getUser(token);
   if (error || !data.user) return null;
   return { valid: true, username: data.user.email };
@@ -98,7 +98,7 @@ export async function createPainting(
   _token: string,
   data: FormData | Record<string, unknown>
 ): Promise<DbPainting> {
-  if (!hasSupabase) throw new Error("Supabase not configured");
+  if (!hasSupabase || !supabase) throw new Error("Supabase not configured");
 
   const body = data instanceof FormData
     ? Object.fromEntries(data.entries()) as Record<string, string>
@@ -143,7 +143,7 @@ export async function updatePainting(
   id: number,
   data: FormData | Record<string, unknown>
 ): Promise<PaintingWithRating> {
-  if (!hasSupabase) throw new Error("Supabase not configured");
+  if (!hasSupabase || !supabase) throw new Error("Supabase not configured");
 
   const body = data instanceof FormData
     ? Object.fromEntries(data.entries()) as Record<string, string>
@@ -184,7 +184,7 @@ export async function updatePainting(
 }
 
 export async function deletePainting(_token: string, id: number) {
-  if (!hasSupabase) throw new Error("Supabase not configured");
+  if (!hasSupabase || !supabase) throw new Error("Supabase not configured");
   const { error } = await supabase.from("paintings").delete().eq("id", id);
   if (error) throw new Error(error.message);
 }
