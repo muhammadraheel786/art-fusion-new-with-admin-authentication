@@ -36,7 +36,7 @@ export const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-secondary text-sm font-body text-muted-foreground mb-6">
+            <span className="section-badge text-primary mb-6">
               The Artist
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">

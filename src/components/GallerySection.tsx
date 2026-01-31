@@ -1,8 +1,20 @@
 import { motion } from "framer-motion";
-import { paintings } from "@/data/paintings";
+import { usePaintings } from "@/hooks/usePaintings";
 import { PaintingCard } from "./PaintingCard";
 
 export const GallerySection = () => {
+  const { paintings, loading } = usePaintings();
+
+  if (loading) {
+    return (
+      <section id="gallery" className="py-24 md:py-32" style={{ background: "var(--gradient-warm)" }}>
+        <div className="container mx-auto px-4 md:px-8 text-center text-muted-foreground">
+          Loading gallery...
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="gallery" className="py-24 md:py-32" style={{ background: "var(--gradient-warm)" }}>
       <div className="container mx-auto px-4 md:px-8">
@@ -14,7 +26,7 @@ export const GallerySection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-secondary text-sm font-body text-muted-foreground mb-4">
+          <span className="section-badge text-primary mb-4">
             Explore Collection
           </span>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">

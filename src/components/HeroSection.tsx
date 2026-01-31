@@ -42,7 +42,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/80 backdrop-blur-sm mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-secondary/80 backdrop-blur-md border border-primary/20 mb-8 shadow-lg"
           >
             <Palette className="w-4 h-4 text-primary" />
             <span className="text-sm font-body text-muted-foreground">

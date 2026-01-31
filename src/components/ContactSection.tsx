@@ -39,7 +39,7 @@ export const ContactSection = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-sm font-body text-primary mb-4">
+            <span className="section-badge text-primary mb-4">
               Get In Touch
             </span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">

@@ -1,19 +1,44 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
-import { Painting } from "@/data/paintings";
 import { useState } from "react";
+import { submitRating, hasSupabase } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
+import { formatPrice } from "@/lib/formatPrice";
+import type { PaintingWithRating } from "@/hooks/usePaintings";
 
 interface PaintingCardProps {
-  painting: Painting;
+  painting: PaintingWithRating;
   index: number;
+  onRatingUpdate?: (paintingId: number, avgRating: number) => void;
 }
 
-export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
-  const [userRating, setUserRating] = useState(painting.rating);
+export const PaintingCard = ({ painting, index, onRatingUpdate }: PaintingCardProps) => {
+  const [displayRating, setDisplayRating] = useState(painting.avg_rating);
+  const [ratingCount, setRatingCount] = useState(painting.rating_count);
   const [isHovered, setIsHovered] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const handleRating = (rating: number) => {
-    setUserRating(rating);
+  const handleRating = async (rating: number) => {
+    if (!hasSupabase) {
+      setDisplayRating(rating);
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const { avg_rating, rating_count } = await submitRating(painting.id, rating);
+      setDisplayRating(avg_rating);
+      setRatingCount(rating_count);
+      onRatingUpdate?.(painting.id, avg_rating);
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "Could not save rating",
+        description: "Please try again.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -22,7 +47,7 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="painting-card bg-card group"
+      className="painting-card bg-card group border border-border/50 rounded-2xl overflow-hidden hover:border-primary/30"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -68,6 +93,13 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
             </span>
           </div>
         )}
+
+        {/* Price badge on image */}
+        <div className="absolute bottom-4 left-4 right-4">
+          <span className="inline-block px-4 py-2 text-sm font-display font-bold bg-primary/95 backdrop-blur-sm text-primary-foreground rounded-xl shadow-lg border border-primary/30">
+            {formatPrice(painting.price)}
+          </span>
+        </div>
       </div>
 
       {/* Content */}
@@ -76,18 +108,19 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
           {painting.title}
         </h3>
 
-        {/* Rating */}
+        {/* Rating - user can click to rate (persists for all users when Supabase is used) */}
         <div className="flex items-center gap-1">
           {[1, 2, 3, 4, 5].map((star) => (
             <button
               key={star}
               onClick={() => handleRating(star)}
-              className="transition-transform hover:scale-110"
+              disabled={submitting}
+              className="transition-transform hover:scale-110 disabled:opacity-50"
               aria-label={`Rate ${star} stars`}
             >
               <Star
                 className={`w-4 h-4 transition-colors ${
-                  star <= userRating
+                  star <= Math.round(displayRating)
                     ? "fill-accent text-accent"
                     : "text-muted-foreground/30"
                 }`}
@@ -95,14 +128,15 @@ export const PaintingCard = ({ painting, index }: PaintingCardProps) => {
             </button>
           ))}
           <span className="ml-2 text-sm text-muted-foreground font-body">
-            ({userRating.toFixed(1)})
+            ({displayRating.toFixed(1)}
+            {ratingCount > 0 && ` · ${ratingCount} rating${ratingCount !== 1 ? "s" : ""}`})
           </span>
         </div>
 
         {/* Price */}
         <div className="flex items-center justify-between pt-2 border-t border-border">
-          <span className="font-display text-2xl font-bold text-primary">
-            {painting.price} {/* Display string directly */}
+          <span className="font-display text-xl font-bold text-primary">
+            {formatPrice(painting.price)}
           </span>
         </div>
       </div>

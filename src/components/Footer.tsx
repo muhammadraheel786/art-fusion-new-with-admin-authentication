@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Instagram, Mail, Phone, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Instagram, Mail, Phone, Heart, Lock } from "lucide-react";
 
 const socialLinks = [
   {
@@ -68,17 +69,26 @@ export const Footer = () => {
           <div className="w-24 h-px bg-primary-foreground/20 mb-6" />
 
           {/* Copyright */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-body text-sm text-primary-foreground/60 flex items-center gap-1"
+            className="font-body text-sm text-primary-foreground/60 flex items-center gap-4 flex-wrap justify-center"
           >
-            © {currentYear} ArtFusion. Made with 
-            <Heart className="w-4 h-4 text-primary fill-primary" />
-            by Abdul Basit
-          </motion.p>
+            <span className="flex items-center gap-1">
+              © {currentYear} ArtFusion. Made with
+              <Heart className="w-4 h-4 text-primary fill-primary" />
+              by Abdul Basit
+            </span>
+            <Link
+              to="/admin/login"
+              className="flex items-center gap-1 text-primary-foreground/40 hover:text-primary-foreground/80 transition-colors"
+            >
+              <Lock className="w-3 h-3" />
+              Admin
+            </Link>
+          </motion.div>
         </div>
       </div>
     </footer>

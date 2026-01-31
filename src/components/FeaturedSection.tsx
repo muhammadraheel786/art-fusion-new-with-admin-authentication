@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { featuredPaintings } from "@/data/paintings";
+import { usePaintings } from "@/hooks/usePaintings";
 import { Star, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { formatPrice } from "@/lib/formatPrice";
 
 export const FeaturedSection = () => {
+  const { featuredPaintings } = usePaintings();
   const scrollToContact = () => {
     const element = document.querySelector("#contact");
     if (element) {
@@ -22,7 +24,7 @@ export const FeaturedSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-sm font-body text-accent-foreground mb-4">
+          <span className="section-badge text-primary mb-4">
             ✨ Best Sellers
           </span>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
@@ -42,7 +44,7 @@ export const FeaturedSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="group relative bg-card rounded-2xl overflow-hidden shadow-artistic hover:shadow-elevated transition-all duration-500"
+              className="group relative bg-card rounded-2xl overflow-hidden shadow-artistic hover:shadow-elevated transition-all duration-500 border border-border/50 hover:border-primary/30"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -82,7 +84,7 @@ export const FeaturedSection = () => {
 
                   {/* Price */}
                   <span className="font-display text-2xl font-bold text-primary whitespace-nowrap">
-                   
+                    {formatPrice(painting.price)}
                   </span>
                 </div>
 
@@ -96,7 +98,7 @@ export const FeaturedSection = () => {
                     <Star
                       key={star}
                       className={`w-5 h-5 ${
-                        star <= painting.rating
+                        star <= Math.round(painting.avg_rating ?? 4)
                           ? "fill-accent text-accent"
                           : "text-muted-foreground/30"
                       }`}
