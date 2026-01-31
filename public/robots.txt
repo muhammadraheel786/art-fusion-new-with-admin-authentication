@@ -1,14 +1,15 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
+# ArtFusion by Basit - robots.txt
+# https://artfusionbybasitlove.shop
 
 User-agent: *
 Allow: /
+
+# Disallow admin pages from indexing
+Disallow: /admin
+Disallow: /admin/login
+
+# Sitemap
+Sitemap: https://artfusionbybasitlove.shop/sitemap.xml
+
+# Crawl-delay is ignored by Google but some bots respect it (optional, remove if not needed)
+# Crawl-delay: 1
