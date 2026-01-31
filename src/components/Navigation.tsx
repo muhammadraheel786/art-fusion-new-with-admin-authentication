@@ -33,8 +33,9 @@ export const Navigation = () => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-artistic"
@@ -43,7 +44,6 @@ export const Navigation = () => {
     >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
           <motion.a
             href="#home"
             onClick={(e) => {
@@ -51,14 +51,14 @@ export const Navigation = () => {
               scrollToSection("#home");
             }}
             className="font-display text-2xl md:text-3xl font-bold text-foreground"
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
           >
             Art<span className="text-primary">Fusion</span>
           </motion.a>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <motion.a
                 key={link.name}
                 href={link.href}
@@ -66,43 +66,68 @@ export const Navigation = () => {
                   e.preventDefault();
                   scrollToSection(link.href);
                 }}
-                className="font-body text-sm tracking-wide text-muted-foreground hover:text-primary transition-colors duration-300 relative group"
+                className="font-body text-sm tracking-wide text-muted-foreground hover:text-primary transition-colors duration-300 relative group py-2"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
                 whileHover={{ y: -2 }}
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
               </motion.a>
             ))}
-            <Button
-              variant="hero"
-              size="sm"
-              onClick={() => scrollToSection("#contact")}
-            >
-              Order Now
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                variant="hero"
+                size="sm"
+                onClick={() => scrollToSection("#contact")}
+              >
+                Order Now
+              </Button>
+            </motion.div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
+          <motion.button
             className="md:hidden p-2 text-foreground"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
+            whileTap={{ scale: 0.9 }}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            <AnimatePresence mode="wait">
+              {isOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                >
+                  <X size={24} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                >
+                  <Menu size={24} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/98 backdrop-blur-lg border-t border-border"
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-background/98 backdrop-blur-lg border-t border-border overflow-hidden"
           >
-            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+            <div className="container mx-auto px-4 py-6 flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.name}
@@ -113,19 +138,25 @@ export const Navigation = () => {
                   }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="font-body text-lg text-foreground hover:text-primary transition-colors py-2"
+                  transition={{ delay: index * 0.05 }}
+                  className="font-body text-lg text-foreground hover:text-primary transition-colors py-3"
                 >
                   {link.name}
                 </motion.a>
               ))}
-              <Button
-                variant="hero"
-                className="mt-4"
-                onClick={() => scrollToSection("#contact")}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
               >
-                Order Now
-              </Button>
+                <Button
+                  variant="hero"
+                  className="mt-4 w-full"
+                  onClick={() => scrollToSection("#contact")}
+                >
+                  Order Now
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         )}

@@ -50,13 +50,18 @@ export const Footer = () => {
             transition={{ delay: 0.1 }}
             className="flex items-center gap-4 mb-8"
           >
-            {socialLinks.map((social) => (
+            {socialLinks.map((social, i) => (
               <motion.a
                 key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 + i * 0.05 }}
+                whileHover={{ scale: 1.15, y: -4 }}
+                whileTap={{ scale: 0.95 }}
                 className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors"
                 aria-label={social.label}
               >
@@ -78,7 +83,12 @@ export const Footer = () => {
           >
             <span className="flex items-center gap-1">
               © {currentYear} ArtFusion. Made with
-              <Heart className="w-4 h-4 text-primary fill-primary" />
+              <motion.span
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <Heart className="w-4 h-4 text-primary fill-primary" />
+              </motion.span>
               by Abdul Basit
             </span>
             <Link
