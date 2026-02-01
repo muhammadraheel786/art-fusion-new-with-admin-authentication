@@ -96,13 +96,14 @@
   }
 
   .painting-card {
-    @apply relative overflow-hidden transition-all duration-500;
+    @apply relative overflow-hidden;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 24px -4px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03);
   }
 
   .painting-card:hover {
     box-shadow: 0 24px 48px -12px rgba(0,0,0,0.6), 0 0 0 1px hsl(var(--primary) / 0.3);
-    transform: translateY(-6px);
+    transform: translateY(-4px);
   }
 
   .painting-card:hover .painting-image {
@@ -167,6 +168,25 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smoother rendering: GPU-friendly animations for key interactive elements */
+@media (prefers-reduced-motion: no-preference) {
+  .painting-card:hover,
+  .painting-card:focus-within {
+    will-change: transform;
+  }
+}
+
+/* Smooth, user-friendly transitions site-wide */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, [role="button"] {
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Mobile responsive: safe areas, touch targets */

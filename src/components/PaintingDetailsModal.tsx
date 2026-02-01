@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Star, ExternalLink, Mail, Phone, Instagram } from "lucide-react";
 import { formatPrice } from "@/lib/formatPrice";
@@ -11,6 +12,35 @@ interface PaintingDetailsModalProps {
 }
 
 export const PaintingDetailsModal = ({ painting, isOpen, onClose }: PaintingDetailsModalProps) => {
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
+
+  // Lock body scroll when modal is open for smoother UX
+  useEffect(() => {
+    if (isOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [isOpen]);
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isOpen && painting) {
+      closeButtonRef.current?.focus({ preventScroll: true });
+    }
+  }, [isOpen, painting]);
+
   if (!painting) return null;
 
   const contactInfo = [
@@ -41,10 +71,11 @@ export const PaintingDetailsModal = ({ painting, isOpen, onClose }: PaintingDeta
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-8 bg-black/80 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-8 bg-black/85 backdrop-blur-md overflow-y-auto overscroll-contain"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
           onClick={onClose}
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
@@ -53,18 +84,19 @@ export const PaintingDetailsModal = ({ painting, isOpen, onClose }: PaintingDeta
             initial={{ scale: 0.9, y: 50, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.9, y: 50, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+            transition={{ type: "spring", stiffness: 120, damping: 24 }}
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button - larger on mobile for touch */}
+            {/* Close Button - always visible, high contrast, touch-friendly */}
             <Button
-              variant="ghost"
+              ref={closeButtonRef}
+              variant="secondary"
               size="icon"
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 bg-background/50 backdrop-blur-sm rounded-full text-foreground hover:bg-background min-h-[44px] min-w-[44px]"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[60] flex items-center justify-center rounded-full border-2 border-border bg-background/95 backdrop-blur-md text-foreground shadow-lg hover:bg-muted hover:border-primary/50 min-h-[44px] min-w-[44px] h-11 w-11 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary"
               onClick={onClose}
               aria-label="Close details"
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6 shrink-0 stroke-[2.5]" />
             </Button>
 
             {/* Image Section */}
@@ -76,8 +108,8 @@ export const PaintingDetailsModal = ({ painting, isOpen, onClose }: PaintingDeta
               />
             </div>
 
-            {/* Details Section - scrollable on mobile */}
-            <div className="p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[50vh] sm:max-h-none">
+            {/* Details Section - scrollable on mobile, smooth scroll */}
+            <div className="p-4 sm:p-6 md:p-8 overflow-y-auto overflow-x-hidden max-h-[50vh] sm:max-h-none scroll-smooth overscroll-contain">
               <div className="flex items-center gap-2 mb-3">
                 {painting.category && (
                   <span className="px-3 py-1.5 text-xs font-body font-medium bg-secondary rounded-full text-muted-foreground">
