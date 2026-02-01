@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { usePaintings } from "@/hooks/usePaintings";
+import type { PaintingWithRating } from "@/hooks/usePaintings";
 import { PaintingCard } from "./PaintingCard";
+import { PaintingDetailsModal } from "./PaintingDetailsModal";
+import { useState } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -14,6 +17,15 @@ const containerVariants = {
 
 export const GallerySection = () => {
   const { paintings, loading } = usePaintings();
+  const [selectedPainting, setSelectedPainting] = useState<PaintingWithRating | null>(null);
+
+  const handleViewDetails = (painting: PaintingWithRating) => {
+    setSelectedPainting(painting);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPainting(null);
+  };
 
   if (loading) {
     return (
@@ -37,9 +49,9 @@ export const GallerySection = () => {
   }
 
   return (
-    <section id="gallery" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="gallery" className="py-16 sm:py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 animate-gradient opacity-30" />
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <div className="container mx-auto px-3 sm:px-4 md:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -84,12 +96,23 @@ export const GallerySection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
         >
           {paintings.map((painting, index) => (
-            <PaintingCard key={painting.id} painting={painting} index={index} />
+            <PaintingCard
+              key={painting.id}
+              painting={painting}
+              index={index}
+              onViewDetails={handleViewDetails}
+            />
           ))}
         </motion.div>
+
+        <PaintingDetailsModal
+          painting={selectedPainting}
+          isOpen={!!selectedPainting}
+          onClose={handleCloseModal}
+        />
       </div>
     </section>
   );

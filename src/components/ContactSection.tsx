@@ -28,10 +28,10 @@ const contactInfo = [
 
 export const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 md:py-32 bg-secondary/30 relative overflow-hidden">
+    <section id="contact" className="py-16 sm:py-24 md:py-32 bg-secondary/30 relative overflow-hidden">
       <div className="absolute inset-0 animate-gradient opacity-15" />
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <div className="container mx-auto px-3 sm:px-4 md:px-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
           <motion.div
@@ -39,7 +39,7 @@ export const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-16"
           >
             <motion.span
               className="section-badge text-primary mb-4 inline-block"
@@ -49,10 +49,10 @@ export const ContactSection = () => {
             >
               Get In Touch
             </motion.span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
               Order Your <span className="text-primary">Painting</span>
             </h2>
-            <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-1">
               Interested in a painting? Contact me directly to place your order. 
               I'm happy to discuss custom pieces and commissions too!
             </p>
@@ -86,7 +86,7 @@ export const ContactSection = () => {
             </div>
 
             {/* Contact Methods */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               {contactInfo.map((contact, index) => (
                 <motion.a
                   key={contact.label}

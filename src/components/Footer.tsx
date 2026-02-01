@@ -24,8 +24,8 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-foreground text-primary-foreground py-12">
-      <div className="container mx-auto px-4 md:px-8">
+    <footer className="bg-foreground text-primary-foreground py-10 sm:py-12 px-3 sm:px-4 md:px-8">
+      <div className="container mx-auto">
         <div className="flex flex-col items-center text-center">
           {/* Logo */}
           <motion.div
@@ -34,7 +34,7 @@ export const Footer = () => {
             viewport={{ once: true }}
             className="mb-6"
           >
-            <h3 className="font-display text-3xl font-bold">
+            <h3 className="font-display text-2xl sm:text-3xl font-bold">
               Art<span className="text-accent">Fusion</span>
             </h3>
             <p className="font-body text-sm text-primary-foreground/70 mt-2">

@@ -168,3 +168,23 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Mobile responsive: safe areas, touch targets */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Minimum touch target size for buttons on touch devices (44px) */
+@media (pointer: coarse) {
+  button:not(.no-touch-target),
+  [role="button"]:not(.no-touch-target) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

@@ -30,7 +30,7 @@ export function usePaintings() {
     }
     setLoading(true);
     fetchPaintings()
-      .then(setPaintings)
+      .then((data) => setPaintings(data.map(toPaintingWithRating)))
       .catch(() => setPaintings(staticPaintings.map(toPaintingWithRating)))
       .finally(() => setLoading(false));
   }, []);

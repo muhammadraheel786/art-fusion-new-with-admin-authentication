@@ -3,9 +3,14 @@ import { usePaintings } from "@/hooks/usePaintings";
 import { Star, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { formatPrice } from "@/lib/formatPrice";
+import { PaintingDetailsModal } from "./PaintingDetailsModal";
+import { useState } from "react";
+import type { PaintingWithRating } from "@/hooks/usePaintings";
 
 export const FeaturedSection = () => {
   const { featuredPaintings } = usePaintings();
+  const [selectedPainting, setSelectedPainting] = useState<PaintingWithRating | null>(null);
+
   const scrollToContact = () => {
     const element = document.querySelector("#contact");
     if (element) {
@@ -13,19 +18,27 @@ export const FeaturedSection = () => {
     }
   };
 
+  const handleViewDetails = (painting: PaintingWithRating) => {
+    setSelectedPainting(painting);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPainting(null);
+  };
+
   return (
-    <section id="featured" className="py-24 md:py-32 bg-secondary/50 relative overflow-hidden">
+    <section id="featured" className="py-16 sm:py-24 md:py-32 bg-secondary/50 relative overflow-hidden">
       {/* Subtle animated background */}
       <div className="absolute inset-0 animate-gradient opacity-20" />
       
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <div className="container mx-auto px-3 sm:px-4 md:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <motion.span
             className="section-badge text-primary mb-4 inline-block"
@@ -36,16 +49,16 @@ export const FeaturedSection = () => {
           >
             ✨ Best Sellers
           </motion.span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
             Featured <span className="text-gradient-gold">Artworks</span>
           </h2>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-1">
             Our most loved and popular paintings, chosen by art enthusiasts
           </p>
         </motion.div>
 
         {/* Featured Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 max-w-5xl mx-auto">
           {featuredPaintings.slice(0, 4).map((painting, index) => (
             <motion.div
               key={painting.id}
@@ -59,7 +72,8 @@ export const FeaturedSection = () => {
                 stiffness: 80,
               }}
               whileHover={{ y: -8 }}
-              className="group relative bg-card rounded-2xl overflow-hidden shadow-artistic border border-border/50 hover:border-primary/40 hover:shadow-elevated transition-all duration-500"
+              className="group relative bg-card rounded-2xl overflow-hidden shadow-artistic border border-border/50 hover:border-primary/40 hover:shadow-elevated transition-all duration-500 cursor-pointer"
+              onClick={() => handleViewDetails(painting)}
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <motion.img
@@ -148,6 +162,11 @@ export const FeaturedSection = () => {
             </motion.div>
           ))}
         </div>
+        <PaintingDetailsModal
+          painting={selectedPainting}
+          isOpen={!!selectedPainting}
+          onClose={handleCloseModal}
+        />
       </div>
     </section>
   );

@@ -26,11 +26,11 @@ const features = [
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="py-24 md:py-32 bg-background relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-24 md:py-32 bg-background relative overflow-hidden">
       <div className="absolute inset-0 animate-gradient opacity-10" />
       
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="container mx-auto px-3 sm:px-4 md:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -46,18 +46,18 @@ export const AboutSection = () => {
             >
               The Artist
             </motion.span>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
               About <span className="text-primary">My Art</span>
             </h2>
-            <div className="space-y-4 font-body text-muted-foreground text-lg leading-relaxed">
+            <div className="space-y-4 font-body text-muted-foreground text-base sm:text-lg leading-relaxed">
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
               >
-                Welcome to ArtFusion! I'm a passionate artist dedicated to creating 
-                beautiful handmade paintings that bring warmth and emotion to any space.
+                Welcome to Art by Basit (ArtFusion)! If you're looking for painters near me or homemade paintings, you're in the right place. I'm a passionate artist dedicated to creating 
+                beautiful handmade and homemade paintings that bring warmth and emotion to any space.
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 15 }}

@@ -42,15 +42,15 @@ export const Navigation = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="container mx-auto px-3 sm:px-4 md:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           <motion.a
             href="#home"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection("#home");
             }}
-            className="font-display text-2xl md:text-3xl font-bold text-foreground"
+            className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >

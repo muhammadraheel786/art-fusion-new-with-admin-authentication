@@ -10,9 +10,10 @@ interface PaintingCardProps {
   painting: PaintingWithRating;
   index: number;
   onRatingUpdate?: (paintingId: number, avgRating: number) => void;
+  onViewDetails: (painting: PaintingWithRating) => void; // New prop to open modal
 }
 
-export const PaintingCard = ({ painting, index, onRatingUpdate }: PaintingCardProps) => {
+export const PaintingCard = ({ painting, index, onRatingUpdate, onViewDetails }: PaintingCardProps) => {
   const [displayRating, setDisplayRating] = useState(painting.avg_rating);
   const [ratingCount, setRatingCount] = useState(painting.rating_count);
   const [isHovered, setIsHovered] = useState(false);
@@ -52,7 +53,7 @@ export const PaintingCard = ({ painting, index, onRatingUpdate }: PaintingCardPr
       whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.08, type: "spring", stiffness: 100 }}
-      className="painting-card bg-card group border border-border/50 rounded-2xl overflow-hidden hover:border-primary/40 [perspective:1000px]"
+      className="painting-card bg-card group border border-border/50 rounded-2xl overflow-hidden hover:border-primary/40 [perspective:1000px] cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -71,6 +72,7 @@ export const PaintingCard = ({ painting, index, onRatingUpdate }: PaintingCardPr
         rotateY: isHovered ? rotateY : 0,
         transformStyle: "preserve-3d",
       }}
+      onClick={() => onViewDetails(painting)} // Open modal on card click
     >
       {/* Image Container */}
       <div className="relative aspect-[4/5] overflow-hidden">
