@@ -41,12 +41,38 @@ import {
 import { formatPrice } from "@/lib/formatPrice";
 
 const CATEGORIES = [
-  "Landscape",
-  "Seascape",
-  "Floral",
-  "Cityscape",
+  // By Medium/Technique
+  "Oil Painting",
+  "Acrylic Painting",
+  "Watercolor Painting",
+  // By Style
   "Abstract",
-  "Expressionist",
+  "Realism",
+  "Impressionism",
+  "Expressionism",
+  "Surrealism",
+  "Cubism",
+  "Minimalism",
+  "Pop Art",
+  "Futurism",
+  // By Subject
+  "Portrait",
+  "Landscape",
+  "Still Life",
+  "Figurative",
+  "Religious",
+  "Historical",
+  "Mythological",
+  // Special Techniques/Textures
+  "Textured Art",
+  "Palette Knife Painting",
+  "Mixed Media",
+  "Resin Art",
+  "3D Paintings",
+  "Calligraphy Art",
+  // Additional
+  "Sketch",
+  "Customized",
 ];
 
 type Painting = {
