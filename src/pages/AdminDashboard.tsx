@@ -88,7 +88,7 @@ type Painting = {
 const emptyForm = () => ({
   title: "",
   description: "",
-  price: "Contact for a personalized quote",
+  price: "Price on request",
   image: "",
   featured: false,
   category: "Landscape",

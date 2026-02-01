@@ -122,7 +122,7 @@ export async function createPainting(
   const row = {
     title: String(body.title || "Untitled"),
     description: String(body.description || ""),
-    price: String(body.price || "Contact for a personalized quote"),
+    price: String(body.price || "Price on request"),
     image: imageUrl,
     category: String(body.category || "Landscape"),
     featured: body.featured === "true" || body.featured === true,

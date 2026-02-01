@@ -5,7 +5,7 @@ create table if not exists paintings (
   id bigint primary key generated always as identity,
   title text not null,
   description text default '',
-  price text default 'Contact for a personalized quote',
+  price text default 'Price on request',
   image text not null,
   category text default 'Landscape',
   featured boolean default false,

@@ -110,7 +110,7 @@ app.post("/api/admin/paintings", authMiddleware, upload.single("image"), async (
       id: maxId + 1,
       title: body.title || "Untitled",
       description: body.description || "",
-      price: body.price || "Contact for a personalized quote",
+      price: body.price || "Price on request",
       image: imagePath,
       rating: parseFloat(body.rating) || 4,
       featured: body.featured === "true" || body.featured === true,

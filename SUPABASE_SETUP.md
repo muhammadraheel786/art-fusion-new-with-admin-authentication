@@ -47,8 +47,8 @@ Example:
 ```sql
 INSERT INTO paintings (title, description, price, image, category, featured)
 VALUES 
-  ('Golden Horizon', 'A calming scene of the sun touching the horizon', 'Contact for a personalized quote', '/paintings/25.png', 'Landscape', false),
-  ('Tranquil Waters', 'Gentle ripples on a peaceful lake', 'Contact for a personalized quote', '/paintings/24.png', 'Seascape', true);
+  ('Golden Horizon', 'A calming scene of the sun touching the horizon', 'Price on request', '/paintings/25.png', 'Landscape', false),
+  ('Tranquil Waters', 'Gentle ripples on a peaceful lake', 'Price on request', '/paintings/24.png', 'Seascape', true);
 ```
 
 **Note:** Image paths like `/paintings/25.png` work for local files. For production, upload images to the Storage bucket and use the public URL.
