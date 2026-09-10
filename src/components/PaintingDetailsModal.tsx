@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Star, ExternalLink, Mail, Phone, Instagram } from "lucide-react";
+import { X, Star, ExternalLink, Mail, Phone, Instagram, MessageCircle } from "lucide-react";
 import { formatPrice } from "@/lib/formatPrice";
 import { PaintingWithRating } from "@/hooks/usePaintings";
 import { Button } from "./ui/button";
@@ -53,7 +53,14 @@ export const PaintingDetailsModal = ({ painting, isOpen, onClose }: PaintingDeta
     },
     {
       icon: Phone,
-      label: "Phone / WhatsApp",
+      label: "Phone Call",
+      value: "0370 6905456",
+      href: "tel:+923706905456",
+      color: "text-blue-600",
+    },
+    {
+      icon: MessageCircle,
+      label: "WhatsApp",
       value: "0370 6905456",
       href: "https://wa.me/923706905456",
       color: "text-green-600",

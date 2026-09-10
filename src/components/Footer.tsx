@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Instagram, Mail, Phone, Heart, Lock } from "lucide-react";
+import { Instagram, Mail, Phone, Heart, Lock, MessageCircle } from "lucide-react";
 
 const socialLinks = [
   {
@@ -15,6 +15,11 @@ const socialLinks = [
   },
   {
     icon: Phone,
+    href: "tel:+923706905456",
+    label: "Call"
+  },
+  {
+    icon: MessageCircle,
     href: "https://wa.me/923706905456",
     label: "WhatsApp"
   }

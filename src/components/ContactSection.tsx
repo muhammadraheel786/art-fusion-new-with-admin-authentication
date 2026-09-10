@@ -12,7 +12,14 @@ const contactInfo = [
   },
   {
     icon: Phone,
-    label: "Phone / WhatsApp",
+    label: "Phone Call",
+    value: "0370 6905456",
+    href: "tel:+923706905456",
+    color: "text-blue-600",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
     value: "0370 6905456",
     href: "https://wa.me/923706905456",
     color: "text-green-600",
@@ -128,8 +135,16 @@ export const ContactSection = () => {
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Button variant="hero" size="xl" asChild>
-                <a href="https://wa.me/923706905456" target="_blank" rel="noopener noreferrer">
+                <a href="tel:+923706905456">
                   <Phone className="w-5 h-5 mr-2" />
+                  Call Now
+                </a>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Button variant="heroOutline" size="xl" asChild>
+                <a href="https://wa.me/923706905456" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp Me
                 </a>
               </Button>
